@@ -1,0 +1,236 @@
+/*
+ * Global styles for the Chor–Dakat–Babu–Police client.
+ * A dark theme with subtle highlights and rounded cards is used to create
+ * a modern, game‑like feel.  Buttons pulse on hover and the scoreboard
+ * and history tables share the same styling for consistency.
+ */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #0d1117;
+  color: #c9d1d9;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Language selector container placed at top right */
+#languageControl {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #8b949e;
+}
+
+#languageControl select {
+  background: #161b22;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 14px;
+}
+
+#languageControl label {
+  font-weight: 600;
+  color: #8b949e;
+}
+
+/* Card container used for join, waiting and game screens */
+.card {
+  /* Use a subtle gradient for card backgrounds to create a more modern look */
+  background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  width: 100%;
+  max-width: 700px;
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+h1, h2, h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #30363d;
+  background: #0d1117;
+  color: #c9d1d9;
+  box-sizing: border-box;
+}
+
+.btn {
+  display: inline-block;
+  background: #238636;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 12px;
+}
+
+.btn:hover {
+  background: #2ea043;
+}
+
+.error {
+  color: #f85149;
+  margin-top: 8px;
+}
+
+/* Top bar containing round and player info */
+.topBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.round {
+  font-size: 20px;
+  font-weight: 600;
+  color: #58a6ff;
+}
+
+.playerInfo {
+  font-size: 16px;
+  color: #8b949e;
+}
+
+/* Table styling for scoreboard and history */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+.table th, .table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #30363d;
+}
+.table th {
+  background: #21262d;
+  color: #e6edf3;
+}
+.table tr:nth-child(even) {
+  background: #161b22;
+}
+
+/* Highlight rows that gained points in the most recent round */
+.table tr.highlight {
+  animation: highlightRow 0.6s ease-in-out;
+}
+
+@keyframes highlightRow {
+  0% { background-color: rgba(34, 139, 34, 0.3); }
+  100% { background-color: transparent; }
+}
+
+.message {
+  margin-top: 12px;
+  font-size: 16px;
+  color: #79c0ff;
+  min-height: 24px;
+}
+
+.guessSection {
+  margin-top: 16px;
+}
+
+.guessSection .guessOptions button {
+  margin: 4px;
+  padding: 10px 14px;
+  background: #8957e5;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s ease;
+}
+.guessSection .guessOptions button:hover {
+  background: #a371f7;
+}
+
+/* Arrange guess options in a vertical list with consistent widths */
+.guessSection .guessOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.guessSection .guessOptions button {
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+}
+
+.historyContainer {
+  margin-top: 20px;
+}
+
+/* Fade in animation for tables when updating */
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Add a subtle pulse to buttons when they appear */
+.btn.fade-in {
+  animation: btnPulse 0.6s ease-in-out;
+}
+
+@keyframes btnPulse {
+  0% { transform: scale(0.96); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* Hide elements via attribute */
+[hidden] {
+  display: none !important;
+}

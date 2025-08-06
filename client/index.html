@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chor–Dakat–Babu–Police</title>
+    <!-- The main stylesheet defines the dark theme and layout -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Language selector positioned in the top right corner -->
+      <div id="languageControl">
+        <label for="langSelect" id="langLabel">Language:</label>
+        <select id="langSelect">
+          <option value="en">English</option>
+          <option value="bn">বাংলা</option>
+        </select>
+      </div>
+      <!-- Join screen: enter name to join the lobby -->
+      <div id="joinScreen" class="card">
+        <h1>Chor–Dakat–Babu–Police</h1>
+        <p>Enter your name to join the game.</p>
+        <input type="text" id="nameInput" placeholder="Your name" />
+        <button id="joinButton" class="btn">Join Game</button>
+        <div id="joinError" class="error"></div>
+      </div>
+      <!-- Waiting screen: shows lobby players and shuffle prompt when ready -->
+      <div id="waitingScreen" class="card" hidden>
+        <h2>Waiting Room</h2>
+        <p id="waitingMessage">Waiting for players to join…</p>
+        <ul id="waitingList"></ul>
+        <button id="shuffleButton" class="btn" hidden>Shuffle &amp; Start Round</button>
+      </div>
+      <!-- Game screen: displays current round, scoreboard, guess area, history -->
+      <div id="gameScreen" class="card" hidden>
+        <div class="topBar">
+          <div id="roundLabel" class="round"></div>
+          <div id="playerInfo" class="playerInfo"></div>
+        </div>
+        <div id="scoreboardContainer" hidden>
+          <h3>Scoreboard</h3>
+          <table id="scoreboard" class="table"></table>
+        </div>
+        <div id="messageArea" class="message"></div>
+        <!-- Police guess section will appear only for the police player -->
+        <div id="guessSection" class="guessSection" hidden>
+          <p id="guessPrompt"></p>
+          <div id="guessOptions" class="guessOptions"></div>
+        </div>
+        <!-- History of points gained each round -->
+        <div id="historyContainer" class="historyContainer" hidden>
+          <h3>Round History</h3>
+          <table id="historyTable" class="table"></table>
+        </div>
+        <!-- Shuffle button for next round -->
+        <button id="nextShuffleButton" class="btn" hidden>Shuffle for Next Round</button>
+        <!-- Restart button appears only after the final results are shown -->
+        <button id="restartButton" class="btn" hidden>Restart Game</button>
+      </div>
+    </div>
+    <!-- Socket.io library -->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Game logic script -->
+    <script src="script.js"></script>
+  </body>
+</html>
