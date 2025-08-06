@@ -10,8 +10,10 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", Tahoma, sans-serif;
-  background: #0d1117;
-  color: #c9d1d9;
+  /* Use a more playful, bright gradient reminiscent of casual mobile games */
+  /* Brighter game‑like gradient reminiscent of casual card games */
+  background: radial-gradient(circle at 50% 50%, #009e5b 0%, #0b3d91 100%);
+  color: #e6edf3;
 }
 
 #app {
@@ -53,15 +55,15 @@ html, body {
 
 /* Card container used for join, waiting and game screens */
 .card {
-  /* Use a subtle gradient for card backgrounds to create a more modern look */
-  background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  padding: 24px;
+  /* Brighten cards with a dynamic gradient and drop shadow to evoke a game board */
+  background: linear-gradient(145deg, #1e2a48 0%, #131c33 100%);
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  padding: 32px;
   width: 100%;
-  max-width: 700px;
+  max-width: 760px;
   box-sizing: border-box;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 h1, h2, h3 {
@@ -155,7 +157,8 @@ input[type="text"] {
 }
 
 @keyframes highlightRow {
-  0% { background-color: rgba(34, 139, 34, 0.3); }
+  /* Use a bright golden flash like UNO when points are gained */
+  0% { background-color: rgba(255, 235, 59, 0.4); }
   100% { background-color: transparent; }
 }
 
@@ -173,7 +176,7 @@ input[type="text"] {
 .guessSection .guessOptions button {
   margin: 4px;
   padding: 10px 14px;
-  background: #8957e5;
+  background: #e87929;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -182,7 +185,7 @@ input[type="text"] {
   transition: background 0.2s ease;
 }
 .guessSection .guessOptions button:hover {
-  background: #a371f7;
+  background: #f18f3c;
 }
 
 /* Arrange guess options in a vertical list with consistent widths */
@@ -201,6 +204,24 @@ input[type="text"] {
 
 .historyContainer {
   margin-top: 20px;
+}
+
+/* Overlay used for countdown and celebration messages */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
 }
 
 /* Fade in animation for tables when updating */

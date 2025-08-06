@@ -29,6 +29,7 @@
   const guessOptions = document.getElementById('guessOptions');
   const historyContainer = document.getElementById('historyContainer');
   const historyTable = document.getElementById('historyTable');
+  const overlay = document.getElementById('overlay');
 
   // State variables
   let myId = null;
@@ -128,6 +129,57 @@
     Chor: '#f85149',
     Dakat: '#8957e5'
   };
+
+  /**
+   * Display a full‑screen overlay with the given message.  The overlay
+   * darkens the background and centers the text.  Use an optional
+   * duration (ms) to automatically hide it after some time.  If no
+   * duration is provided the overlay will remain until hideOverlay()
+   * is called.
+   *
+   * @param {string} text
+   * @param {number} duration
+   */
+  function showOverlay(text, duration = 0) {
+    if (!overlay) return;
+    overlay.textContent = text;
+    overlay.hidden = false;
+    // Reset any previous animation by forcing reflow
+    overlay.classList.remove('fade-in');
+    void overlay.offsetWidth;
+    overlay.classList.add('fade-in');
+    if (duration > 0) {
+      setTimeout(() => {
+        hideOverlay();
+      }, duration);
+    }
+  }
+
+  /**
+   * Hide the overlay and clear its text.
+   */
+  function hideOverlay() {
+    if (!overlay) return;
+    overlay.hidden = true;
+    overlay.textContent = '';
+  }
+
+  /**
+   * Launch a burst of confetti from the bottom of the screen.  Uses the
+   * canvas‑confetti library loaded in index.html.  This helper
+   * gracefully fails if the library is not available.
+   */
+  function launchConfetti() {
+    try {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    } catch (e) {
+      // confetti library not available; ignore
+    }
+  }
 
   // Translation helper
   function t(key) {
@@ -362,7 +414,26 @@
     // Clear last gains at the beginning of a round so no rows are highlighted
     lastGains = {};
     // Play a subtle beep at the start of the round to signal shuffling is complete
-    playBeep(523.25, 200); // C5 note
+    // Countdown overlay before round begins
+    try {
+      // Show a quick 3‑2‑1 countdown with beeps
+      showOverlay('3');
+      playBeep(523.25, 200); // C5
+      setTimeout(() => {
+        showOverlay('2');
+        playBeep(587.33, 200); // D5
+      }, 700);
+      setTimeout(() => {
+        showOverlay('1');
+        playBeep(659.25, 200); // E5
+      }, 1400);
+      setTimeout(() => {
+        hideOverlay();
+      }, 2100);
+    } catch (_) {
+      // fallback beep if timers fail
+      playBeep(523.25, 200);
+    }
     // Reset guess and messages
     guessSection.hidden = true;
     guessOptions.innerHTML = '';
@@ -450,6 +521,12 @@
     messageArea.textContent = msg;
     // Play beep: high tone if correct, low tone if wrong
     playBeep(data.correct ? 880 : 220, 300);
+    // Show a brief overlay with the outcome and launch confetti on correct guesses
+    const resultMsg = data.correct ? (lang === 'bn' ? 'সঠিক অনুমান!' : 'Correct Guess!') : (lang === 'bn' ? 'ভুল অনুমান!' : 'Wrong Guess!');
+    showOverlay(resultMsg, 1500);
+    if (data.correct) {
+      launchConfetti();
+    }
     // Enable shuffle for next round
     nextShuffleButton.hidden = false;
     nextShuffleButton.disabled = false;
@@ -484,6 +561,10 @@
     // Play celebration beep
     playBeep(660, 400);
     playBeep(880, 400);
+    // Show celebratory overlay and confetti
+    const winText = (lang === 'bn' ? 'অভিনন্দন!' : 'Congratulations!') + ' ' + data.winners.join(', ');
+    showOverlay(winText, 3000);
+    launchConfetti();
     nextShuffleButton.hidden = true;
     // Show restart button with translated label
     if (restartButton) {
